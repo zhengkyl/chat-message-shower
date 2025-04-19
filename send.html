@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OBS Browser Source Sender</title>
+    <script src="https://cdn.jsdelivr.net/npm/obs-websocket-js@5.0.6"></script>
+  </head>
+  <body>
+    <h1>OBS Browser Source Sender</h1>
+    <button id="sendButton">Send Message</button>
+
+    <script>
+      const obs = new OBSWebSocket();
+
+      async function connectToOBS() {
+        try {
+          await obs.connect("ws://localhost:4455");
+          console.log("Connected to OBS WebSocket");
+        } catch (error) {
+          console.error("Failed to connect to OBS:", error);
+        }
+      }
+
+      async function sendMessage() {
+        try {
+          const response = await obs.call("CallVendorRequest", {
+            vendorName: "obs-browser",
+            requestType: "emit_event",
+            requestData: {
+              event_name: "obs-browser-event",
+              event_data: {
+                message: "Hello from sender!",
+                timestamp: new Date().toISOString(),
+              },
+            },
+          });
+          console.log("Message sent:", response);
+        } catch (error) {
+          console.error("Failed to send message:", error);
+        }
+      }
+
+      document
+        .getElementById("sendButton")
+        .addEventListener("click", sendMessage);
+      connectToOBS();
+    </script>
+  </body>
+</html>

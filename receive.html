@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OBS Browser Source Receiver</title>
+  </head>
+  <body>
+    <h1>OBS Browser Source Receiver</h1>
+    <div id="messageLog"></div>
+
+    <script>
+      // Listen for messages from OBS browser source
+      window.addEventListener("obs-browser-event", (event) => {
+        const message = event.detail;
+        console.log("Received message:", message);
+
+        // Display the message
+        const messageLog = document.getElementById("messageLog");
+        const messageElement = document.createElement("div");
+        messageElement.textContent = `${message.timestamp} ${message.message}`;
+        messageLog.appendChild(messageElement);
+      });
+
+      console.log("Receiver ready to receive messages");
+    </script>
+  </body>
+</html>
