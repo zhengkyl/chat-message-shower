@@ -5,6 +5,8 @@
     "strict": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "types": ["node"]
-  }
+    "types": ["node"],
+    "outDir": "./dist"
+  },
+  "exclude": ["node_modules"]
 }
